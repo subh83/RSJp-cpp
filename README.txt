@@ -22,7 +22,7 @@
 *                                                                                        *
 *************************************************************************************** **/
 
-A template-basd JSON parser for C++ that is entirely contained in a single header file.
+A template-based JSON parser for C++ that is entirely contained in a single header file.
 
 Basic usage:
 ------------
