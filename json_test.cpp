@@ -27,7 +27,7 @@
 #include <iostream>
 #include <fstream>
 
-// RJSP header:
+// RSJP header:
 #include "JSONparser.h"
 
 int main(int argc, char *argv[])
