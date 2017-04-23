@@ -23,6 +23,15 @@
 *************************************************************************************** **/
 
 A template-based JSON parser for C++ that is entirely contained in a single header file.
+    Uses STL. Does not depend on any external library.
+
+JavaScript Object Notation (JSON) is an open-standard format that uses human-readable text
+    to transmit data objects consisting of attribute–value pairs.
+    More info: https://en.wikipedia.org/wiki/JSON 
+
+RSJP-cpp implements a relaxed parser that works with standard JSON syntax while allowing 
+    some relaxation (e.g., omitting quotes around object field names).
+
 
 Basic usage:
 ------------
