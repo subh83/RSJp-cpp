@@ -39,7 +39,7 @@ Basic usage:
     std::ifstream my_fstream ("envfiles/problems.env");
     JSONcontainer json_file_container (my_fstream);
     
-- Access structured JSON data:
+* Access structured JSON data:
 
     std::cout << my_container["coordinates"][1].as<int>();
     std::cout << my_container["comment"].as<std::string>() << std::endl;
@@ -47,3 +47,9 @@ Basic usage:
     JSONarray the_array = json_file_container.as<JSONarray>();
     std::cout << the_array[a]["goal"][0].as<double>();
     
+===================================================================
+
+Compile & run 'json_test.cpp':
+    g++ -std=gnu++11 -O3 -g  -w -I. -o json_test json_test.cpp -lm
+    ./json_test
+
