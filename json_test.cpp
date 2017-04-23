@@ -27,13 +27,14 @@
 #include <iostream>
 #include <fstream>
 
-// Other libraries:
+// RJSP header:
 #include "JSONparser.h"
 
 int main(int argc, char *argv[])
 {
     // Example 1:
-    std::string    str = "{'animal':cat, coordinates: [2, 5, 8], is_vicious: false, \ncomment:'It\\'s in fact quite...\\t adorable.' }";
+    std::string    str = "{'animal':cat, coordinates: [2, 5, 8], is_vicious: false, "
+                         "\ncomment:'It\\'s in fact quite...\\t adorable.' }";
     JSONcontainer  my_container (str); // JSON parser:
     
     std::cout << "\n---------\nEXAMPLE 1: The string:\n" << str << "\n" << std::endl;
@@ -46,7 +47,7 @@ int main(int argc, char *argv[])
     
     std::cout << "Some specific queries:" << std::endl;
     std::cout << "\tThe animal is: " << my_container["animal"].as<std::string>() << std::endl;
-    std::cout << "\tIts Y coordinate is: " << my_container.jsonObject["coordinates"][1].as<int>() << std::endl;
+    std::cout << "\tIts Y coordinate is: " << my_container["coordinates"][1].as<int>() << std::endl;
     std::cout << "\tIts Z coordinate is: " << my_container["coordinates"][2].as<double>() << std::endl;
     std::cout << "\tIs it vicious? " << my_container["is_vicious"].as<bool>() << std::endl;
     std::cout << "\tComment: " << my_container["comment"].as<std::string>() << std::endl;
@@ -66,5 +67,4 @@ int main(int argc, char *argv[])
                         the_array[a]["map_name"].as<std::string>().c_str());
     std::cout << std::endl;
 }
-
 
