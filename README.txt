@@ -33,19 +33,20 @@ Basic usage:
     
 * Create an instance of 'JSONcontainer' using a string or file stream:
 
-    std::string str = "{'animal':cat, coordinates: [2, 5, 8], is_vicious: false, \ncomment:'It\\'s in fact quite...\\t adorable.' }";
-    JSONcontainer my_container (str);
+    - std::string str = "{'animal':cat, coordinates: [2, 5, 8], is_vicious: false, "
+                        "\ncomment:'It\\'s in fact quite...\\t adorable.' }";
+      JSONcontainer my_container (str);
     
-    std::ifstream my_fstream ("envfiles/problems.env");
-    JSONcontainer json_file_container (my_fstream);
+    - std::ifstream my_fstream ("envfiles/problems.env");
+      JSONcontainer json_file_container (my_fstream);
     
 * Access structured JSON data:
 
-    std::cout << my_container["coordinates"][1].as<int>();
-    std::cout << my_container["comment"].as<std::string>() << std::endl;
+    - std::cout << my_container["coordinates"][1].as<int>();
+      std::cout << my_container["comment"].as<std::string>() << std::endl;
     
-    JSONarray the_array = json_file_container.as<JSONarray>();
-    std::cout << the_array[a]["goal"][0].as<double>();
+    - JSONarray the_array = json_file_container.as<JSONarray>();
+      std::cout << the_array[a]["goal"][0].as<double>();
     
 ===================================================================
 
