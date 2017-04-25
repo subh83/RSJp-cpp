@@ -30,11 +30,11 @@ RSJP-cpp is a template-based JSON parser for C++ that is contained in a single h
 *   RSJP-cpp uses STL.
 *   RSJP-cpp does not depend on any external library.
 *   RSJP-cpp is template-based and there is nothing to build/install. The entire library is 
-    contained in a single header file that you simply need to unclude in your code.
+    contained in a single header file that you simply unclude in your code.
 *   RSJP-cpp implements a relaxed parser that works with standard JSON syntax while
-    allowing some relaxation (e.g., omitting quotes around object field names).
+    allowing some relaxation (e.g., omitting quotes around object key names).
 *   Efficiency considerations:
-    - Parses the JSON text on an on-demand basis.
+    - Parses parts of the JSON text at an on-demand basis.
     - Internally stores parsed data for quick future reference.
     - TODO: Will use 'istream' for reading JSON text instead of 'string'.
 
@@ -61,7 +61,7 @@ Basic usage:
       std::cout << my_container["comment"].as<std::string>() << std::endl;
     
     - JSONarray the_array = json_file_container.as<JSONarray>();
-      std::cout << the_array[a]["goal"][0].as<double>();
+      std::cout << the_array[1]["goal"][0].as<double>();
     
     
 -----------------------------
