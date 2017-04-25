@@ -22,15 +22,21 @@
 *                                                                                        *
 *************************************************************************************** **/
 
-A template-based JSON parser for C++ that is entirely contained in a single header file.
-    Uses STL. Does not depend on any external library.
-
 JavaScript Object Notation (JSON) is an open-standard format that uses human-readable text
     to transmit data objects consisting of attribute–value pairs.
     More info: https://en.wikipedia.org/wiki/JSON 
 
-RSJP-cpp implements a relaxed parser that works with standard JSON syntax while allowing 
-    some relaxation (e.g., omitting quotes around object field names).
+RSJP-cpp is a template-based JSON parser for C++ that is contained in a single header file.
+*   RSJP-cpp uses STL.
+*   RSJP-cpp does not depend on any external library.
+*   RSJP-cpp is template-based and there is nothing to build/install. The entire library is 
+    contained in a single header file that you simply need to unclude in your code.
+*   RSJP-cpp implements a relaxed parser that works with standard JSON syntax while
+    allowing some relaxation (e.g., omitting quotes around object field names).
+*   Efficiency considerations:
+    - Parses the JSON text on an on-demand basis.
+    - Internally stores parsed data for quick future reference.
+    - TODO: Will use 'istream' for reading JSON text instead of 'string'.
 
 
 Basic usage:
@@ -57,8 +63,8 @@ Basic usage:
     - JSONarray the_array = json_file_container.as<JSONarray>();
       std::cout << the_array[a]["goal"][0].as<double>();
     
-===================================================================
-
+    
+-----------------------------
 Compile & run 'json_test.cpp':
     g++ -std=gnu++11 -O3 -g  -w -I. -o json_test json_test.cpp -lm
     ./json_test
