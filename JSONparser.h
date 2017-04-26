@@ -45,7 +45,7 @@ char JSONcharescape = '\\';
 // ============================================================
 
 class JSONcontainer;
-// Use: JSONcontainer("JSON_string_data").as<JSONobject>()["fieldName"].as<JSONarray>()[2].as<int>()
+// Use: JSONcontainer("JSON_string_data").as<JSONobject>()["keyName"].as<JSONarray>()[2].as<int>()
 
 // Helper preprocessor directives
 #define jsonObject  as<JSONobject>()
@@ -66,13 +66,13 @@ public:
     }
     
     template <class dataType>
-    dataType as (void) {
-        // specialized outside class
+    dataType as (void) { // specialized outside class declaration
+        return dataType (data); // default behavior for unknown types: invoke 'dataType(std::string)'
     }
     
     // parsed data and opertor[]
     JSONobject parsed_obj;
-    JSONcontainer& operator[] (std::string field);
+    JSONcontainer& operator[] (std::string key);
     JSONarray parsed_array;
     JSONcontainer& operator[] (int indx);
 };
@@ -84,8 +84,6 @@ std::string strtrim (std::string str, std::string chars=" \n\r", std::string opt
     if (str.empty()) return(str);
     
     if (opts.find('l')!=std::string::npos) { // left trim
-        //std::string::iterator p;
-        //for (p = str.begin(); p!=str.end() && chars.find(*p)!=string::npos; ++p);
         int p;
         for (p=0; p<str.length(); ++p)
             if (chars.find(str[p])==std::string::npos) break;
@@ -197,7 +195,7 @@ std::vector<std::string> split_JSON_array (std::string str) {
 
 
 // ============================================================
-// Specialized .at() member functions
+// Specialized .as() member functions
 
 // JSONobject
 template <>
@@ -218,10 +216,10 @@ std::map <std::string,JSONcontainer>  JSONcontainer::as<JSONobject> (void) {
     return (ret);
 }
 
-JSONcontainer& JSONcontainer::operator[] (std::string field) {
+JSONcontainer& JSONcontainer::operator[] (std::string key) {
     if (parsed_obj.empty())
         parsed_obj = as<JSONobject>();
-    return (parsed_obj[field]);
+    return (parsed_obj[key]);
 }
 
 // ------------------------------------
