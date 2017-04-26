@@ -38,6 +38,8 @@ RSJP-cpp is a template-based JSON parser for C++ that is contained in a single h
     - Internally stores parsed data for quick future reference.
     - TODO: Will use 'istream' for reading JSON text instead of 'string'.
 
+Example:
+    JSONcontainer("{'JSON': string_data, keyName: [2,3,5,7]}")["keyName"][2].as<int>()
 
 Basic usage:
 ------------
