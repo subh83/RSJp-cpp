@@ -45,7 +45,8 @@ char JSONcharescape = '\\';
 // ============================================================
 
 class JSONcontainer;
-// Use: JSONcontainer("JSON_string_data").as<JSONobject>()["keyName"].as<JSONarray>()[2].as<int>()
+/* Use: JSONcontainer("JSON_string_data").as<JSONobject>()["keyName"].as<JSONarray>()[2].as<int>()
+        JSONcontainer("JSON_string_data")["keyName"][2].as<int>()  */
 
 // Helper preprocessor directives
 #define jsonObject  as<JSONobject>()
