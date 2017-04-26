@@ -32,6 +32,11 @@
 
 int main(int argc, char *argv[])
 {
+    // Example 0:
+    std::cout << "\n---------\nEXAMPLE 0: " << 
+        JSONcontainer("{'JSON': string_data, keyName: [2,3,5,7]}")["keyName"][2].as<int>() << std::endl;
+    
+    // ===============================================================================
     // Example 1:
     std::string    str = "{'animal':cat, coordinates: [2, 5, 8], is_vicious: false, "
                          "\ncomment:'It\\'s in fact quite...\\t adorable.' }";
