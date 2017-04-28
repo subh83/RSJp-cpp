@@ -30,16 +30,32 @@ RSJP-cpp is a template-based JSON parser for C++ that is contained in a single h
 *   RSJP-cpp uses STL.
 *   RSJP-cpp does not depend on any external library.
 *   RSJP-cpp is template-based and there is nothing to build/install. The entire library is 
-    contained in a single header file that you simply unclude in your code.
+    contained in a single header file that you simply include in your code.
 *   RSJP-cpp implements a relaxed parser that works with standard JSON syntax while
     allowing some relaxation (e.g., omitting quotes around object key names).
+*   It is possible to extend the parsers to non-fundamental or user-defined types.
 *   Efficiency considerations:
     - Parses parts of the JSON text at an on-demand basis.
     - Internally stores parsed data for quick future reference.
     - TODO: Will use 'istream' for reading JSON text instead of 'string'.
 
+Use:
+The header provides the 'JSONcontainer' class that can be initialized using a 'std::string'.
+The structured data is then accessed using the following members:
+    JSONcontainer& JSONcontainer::operator[] (std::string key) // for JSON object
+    JSONcontainer& JSONcontainer::operator[] (int indx)        // for JSON array
+    template <class dataType>  dataType as (void)              // for JSON data
+
 Example:
-    JSONcontainer("{'JSON': string_data, keyName: [2,3,5,7]}")["keyName"][2].as<int>()
+    std::string str = "{'JSON': string_data, keyName: [2,3,5,7]}";
+    std::cout  <<  JSONcontainer(str)["keyName"][2].as<int>();     // prints 5
+
+It is possible to extend the parsers to non-fundamental or user-defined types by
+specializing the template member function 'as' in your own code:
+    template<>
+    user_defined_type  JSONcontainer::as<user_defined_type> (void)
+    { /* ... */ }
+
 
 Basic usage:
 ------------
