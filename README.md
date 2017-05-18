@@ -90,7 +90,7 @@ Basic usage:
 * Access structured JSON data:
 ```C++
       std::cout << my_container["coordinates"][1].as<int>();
-      std::cout << my_container["is_vicious"][1].as<bool>();
+      std::cout << my_container["is_vicious"].as<bool>();
       std::cout << my_container["comment"].as<std::string>() << std::endl;
     
       JSONarray the_array = json_file_container.as<JSONarray>();
