@@ -48,9 +48,9 @@ The header provides the 'JSONcontainer' class that can be initialized using a 's
 ```
 The structured data is then accessed using the following members:
 ```C++
-    JSONcontainer& JSONcontainer::operator[] (std::string key) // for JSON object
-    JSONcontainer& JSONcontainer::operator[] (int indx)        // for JSON array
-    template <class dataType>  dataType as (void)              // for JSON data
+    JSONcontainer& JSONcontainer::operator[] (std::string key)    // for JSON object
+    JSONcontainer& JSONcontainer::operator[] (int indx)           // for JSON array
+    template <class dataType> dataType JSONcontainer::as (void)   // for JSON data
 ```
 
 ### Example:
