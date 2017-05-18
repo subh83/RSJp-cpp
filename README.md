@@ -1,3 +1,4 @@
+```
 /** **************************************************************************************
 *                                                                                        *
 *    A Ridiculously Simple JSON Parser for C++ (RSJP-cpp)                                *
@@ -21,6 +22,7 @@
 *                                                                                        *
 *                                                                                        *
 *************************************************************************************** **/
+```
 
 JavaScript Object Notation (JSON) is an open-standard format that uses human-readable text
     to transmit data objects consisting of attribute–value pairs.
@@ -39,51 +41,61 @@ RSJP-cpp is a template-based JSON parser for C++ that is contained in a single h
     - Internally stores parsed data for quick future reference.
     - TODO: Will use 'istream' for reading JSON text instead of 'string'.
 
-Use:
-The header provides the 'JSONcontainer' class that can be initialized using a 'std::string'.
+### Use:
+The header provides the 'JSONcontainer' class that can be initialized using a 'std::string':
+-    JSONcontainer::JSONcontainer (std::string json_text)
 The structured data is then accessed using the following members:
-    JSONcontainer& JSONcontainer::operator[] (std::string key) // for JSON object
-    JSONcontainer& JSONcontainer::operator[] (int indx)        // for JSON array
-    template <class dataType>  dataType as (void)              // for JSON data
+-    JSONcontainer& JSONcontainer::operator[] (std::string key) // for JSON object
+-    JSONcontainer& JSONcontainer::operator[] (int indx)        // for JSON array
+-    template <class dataType>  dataType as (void)              // for JSON data
 
-Example:
+### Example:
+```C++
     std::string str = "{'JSON': string_data, keyName: [2,3,5,7]}";
     std::cout  <<  JSONcontainer(str)["keyName"][2].as<int>();     // prints 5
+```
 
+### User-defined Types:
 It is possible to extend the parsers to non-fundamental or user-defined types by
 specializing the template member function 'as' in your own code:
+```C++
     template<>
     user_defined_type  JSONcontainer::as<user_defined_type> (void)
     { /* ... */ }
-
+```
 
 Basic usage:
 ------------
 
 * Include header file in your code:
-
+```C++
     #include "JSONparser.h"
-    
-* Create an instance of 'JSONcontainer' using a string or file stream:
+```
 
-    - std::string str = "{'animal':cat, coordinates: [2, 5, 8], is_vicious: false, "
+* Create an instance of 'JSONcontainer' using a string or file stream:
+```C++
+      std::string str = "{'animal':cat, coordinates: [2, 5, 8], is_vicious: false, "
                         "\ncomment:'It\\'s in fact quite...\\t adorable.' }";
       JSONcontainer my_container (str);
-    
-    - std::ifstream my_fstream ("envfiles/problems.env");
-      JSONcontainer json_file_container (my_fstream);
-    
-* Access structured JSON data:
 
-    - std::cout << my_container["coordinates"][1].as<int>();
+// or...
+
+      std::ifstream my_fstream ("envfiles/problems.env");
+      JSONcontainer json_file_container (my_fstream);
+```
+
+* Access structured JSON data:
+```C++
+      std::cout << my_container["coordinates"][1].as<int>();
       std::cout << my_container["comment"].as<std::string>() << std::endl;
     
-    - JSONarray the_array = json_file_container.as<JSONarray>();
+      JSONarray the_array = json_file_container.as<JSONarray>();
       std::cout << the_array[1]["goal"][0].as<double>();
-    
+ ```
     
 -----------------------------
 Compile & run 'json_test.cpp':
+```
     g++ -std=gnu++11 -O3 -g  -w -I. -o json_test json_test.cpp -lm
     ./json_test
-
+```
