@@ -43,11 +43,11 @@ RSJP-cpp is a template-based JSON parser for C++ that is contained in a single h
 
 ### Use:
 The header provides the 'JSONcontainer' class that can be initialized using a 'std::string':
--    JSONcontainer::JSONcontainer (std::string json_text)
+```C++     JSONcontainer::JSONcontainer (std::string json_text)```
 The structured data is then accessed using the following members:
--    JSONcontainer& JSONcontainer::operator[] (std::string key) // for JSON object
--    JSONcontainer& JSONcontainer::operator[] (int indx)        // for JSON array
--    template <class dataType>  dataType as (void)              // for JSON data
+```C++    JSONcontainer& JSONcontainer::operator[] (std::string key) // for JSON object```
+```C++    JSONcontainer& JSONcontainer::operator[] (int indx)        // for JSON array```
+```C++    template <class dataType>  dataType as (void)              // for JSON data```
 
 ### Example:
 ```C++
@@ -74,8 +74,7 @@ Basic usage:
 
 * Create an instance of 'JSONcontainer' using a string or file stream:
 ```C++
-      std::string str = "{'animal':cat, coordinates: [2, 5, 8], is_vicious: false, "
-                        "\ncomment:'It\\'s in fact quite...\\t adorable.' }";
+      std::string str = "{'animal':cat, coordinates: [2, 5, 8], is_vicious: false, \n comment:'It\\'s in fact quite...\\t adorable.' }";
       JSONcontainer my_container (str);
 
 // or...
@@ -87,6 +86,7 @@ Basic usage:
 * Access structured JSON data:
 ```C++
       std::cout << my_container["coordinates"][1].as<int>();
+      std::cout << my_container["is_vicious"][1].as<bool>();
       std::cout << my_container["comment"].as<std::string>() << std::endl;
     
       JSONarray the_array = json_file_container.as<JSONarray>();
