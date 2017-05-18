@@ -43,11 +43,15 @@ RSJP-cpp is a template-based JSON parser for C++ that is contained in a single h
 
 ### Use:
 The header provides the 'JSONcontainer' class that can be initialized using a 'std::string':
-```C++     JSONcontainer::JSONcontainer (std::string json_text)```
+```C++
+    JSONcontainer::JSONcontainer (std::string json_text)
+```
 The structured data is then accessed using the following members:
-```C++    JSONcontainer& JSONcontainer::operator[] (std::string key) // for JSON object```
-```C++    JSONcontainer& JSONcontainer::operator[] (int indx)        // for JSON array```
-```C++    template <class dataType>  dataType as (void)              // for JSON data```
+```C++
+    JSONcontainer& JSONcontainer::operator[] (std::string key) // for JSON object
+    JSONcontainer& JSONcontainer::operator[] (int indx)        // for JSON array
+    template <class dataType>  dataType as (void)              // for JSON data
+```
 
 ### Example:
 ```C++
