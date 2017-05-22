@@ -1,10 +1,10 @@
 ```
 /** **************************************************************************************
 *                                                                                        *
-*    A Ridiculously Simple JSON Parser for C++ (RSJP-cpp)                                *
-*    Version 1.0a                                                                        *
+*    A Ridiculously Simple JSON parser for C++ (RSJp-cpp)                                *
+*    Version 1.0b                                                                        *
 *    ----------------------------------------------------------                          *
-*    Copyright (C) 2016  Subhrajit Bhattacharya                                          *
+*    Copyright (C) 2017  Subhrajit Bhattacharya                                          *
 *                                                                                        *
 *    This program is free software: you can redistribute it and/or modify                *
 *    it under the terms of the GNU General Public License as published by                *
@@ -32,7 +32,7 @@ RSJP-cpp is a template-based JSON parser for C++ that is contained in a single h
 *   RSJP-cpp uses STL.
 *   RSJP-cpp does not depend on any external library.
 *   RSJP-cpp is template-based and there is nothing to build/install. The entire library is 
-    contained in a single header file that you simply include in your code.
+    contained in a single header (tcc) file that you simply include in your code.
 *   RSJP-cpp implements a relaxed parser that works with standard JSON syntax while
     allowing some relaxation (e.g., omitting quotes around object key names).
 *   It is possible to extend the parsers to non-fundamental or user-defined types.
@@ -42,21 +42,23 @@ RSJP-cpp is a template-based JSON parser for C++ that is contained in a single h
     - TODO: Will use 'istream' for reading JSON text instead of 'string'.
 
 ### Use:
-The header provides the 'JSONcontainer' class that can be initialized using a 'std::string':
+The header provides the 'RSJresource' class that can be initialized using a 'std::string':
 ```C++
-    JSONcontainer::JSONcontainer (std::string json_text);          // constructor
+    RSJresource::RSJresource (std::string json_text);          // constructor
 ```
 The structured data is then accessed using the following members:
 ```C++
-    JSONcontainer& JSONcontainer::operator[] (std::string key);    // for JSON object
-    JSONcontainer& JSONcontainer::operator[] (int indx);           // for JSON array
-    template <class dataType> dataType JSONcontainer::as (void);   // for JSON data
+    RSJresource& RSJresource::operator[] (std::string key);    // for JSON object
+    RSJresource& RSJresource::operator[] (int indx);    // for JSON array
+    template <class dataType> dataType RSJresource::as (const dataType& def = dataType());    // for JSON data (with value defaulting to 'def' if field does not exist)
 ```
 
 ### Example:
 ```C++
-    std::string str = "{'JSON': string_data, keyName: [2,3,5,7]}";
-    std::cout  <<  JSONcontainer(str)["keyName"][2].as<int>();     // prints 5
+    std::string str = "{'RSJ': string data, keyName: [2,3,5,7]}";
+    std::cout  <<  RSJresource(str)["keyName"][2].as<int>();     // prints 5
+    std::cout  <<  RSJresource(str)["RSJ"].as<std::string>("default string"); // prints "string data"
+    std::cout  <<  RSJresource(str)["JSON"].as<std::string>("default string"); // prints "default string"
 ```
 
 ### User-defined Types:
@@ -64,7 +66,7 @@ It is possible to extend the parsers to non-fundamental or user-defined types by
 specializing the template member function 'as' in your own code:
 ```C++
     template<>
-    user_defined_type  JSONcontainer::as<user_defined_type> (void)
+    user_defined_type  RSJresource::as<user_defined_type> (const user_defined_type& def)
     { /* ... */ }
 ```
 
@@ -73,33 +75,32 @@ Basic usage:
 
 * Include header file in your code:
 ```C++
-    #include "JSONparser.h"
+    #include "RSJparser.tcc"
 ```
 
-* Create an instance of 'JSONcontainer' using a string or file stream:
+* Create an instance of 'RSJresource' using a string or file stream:
 ```C++
-      std::string str = "{'animal':cat, coordinates: [2, 5, 8], is_vicious: false, \n comment:'It\\'s in fact quite...\\t adorable.' }";
-      JSONcontainer my_container (str);
+      std::string str = "{'animal':cat, coordinates: [2, 5, 8], height: 1, \nis_vicious: false, comment:'It\\'s in fact quite...\\t adorable.' }";
+      RSJresource my_resource (str);
 
 // or...
 
-      std::ifstream my_fstream ("envfiles/problems.env");
-      JSONcontainer json_file_container (my_fstream);
+      std::ifstream my_fstream ("file_name.txt");
+      RSJresource json_file_resource (my_fstream);
 ```
 
 * Access structured JSON data:
 ```C++
-      std::cout << my_container["coordinates"][1].as<int>();
-      std::cout << my_container["is_vicious"].as<bool>();
-      std::cout << my_container["comment"].as<std::string>() << std::endl;
-    
-      JSONarray the_array = json_file_container.as<JSONarray>();
-      std::cout << the_array[1]["goal"][0].as<double>();
+      std::cout << my_container["coordinates"][1].as<int>(); // prints 5
+      std::cout << my_container["is_vicious"].as<bool>(); // prints 0
+      std::cout << my_container["comment"].as<std::string>() << std::endl; // prints "It's in fact quite...	 adorable."
+      std::cout << my_container["height"].as<int>(-1) << std::endl; // prints 1
+      std::cout << my_container["width"].as<int>(-1) << std::endl; // prints -1
  ```
     
 -----------------------------
 Compile & run 'json_test.cpp':
 ```
-    g++ -std=gnu++11 -O3 -g  -w -I. -o json_test json_test.cpp -lm
+    g++ -std=gnu++11 -Og -o json_test json_test.cpp
     ./json_test
 ```
