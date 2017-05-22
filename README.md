@@ -28,12 +28,12 @@ JavaScript Object Notation (JSON) is an open-standard format that uses human-rea
     to transmit data objects consisting of attribute–value pairs.
     More info: https://en.wikipedia.org/wiki/JSON 
 
-RSJP-cpp is a template-based JSON parser for C++ that is contained in a single header file.
-*   RSJP-cpp uses STL.
-*   RSJP-cpp does not depend on any external library.
-*   RSJP-cpp is template-based and there is nothing to build/install. The entire library is 
+RSJp-cpp is a template-based JSON parser for C++ that is contained in a single header file.
+*   RSJp-cpp uses STL.
+*   RSJp-cpp does not depend on any external library.
+*   RSJp-cpp is template-based and there is nothing to build/install. The entire library is 
     contained in a single header file (`RSJparser.tcc`) that you simply include in your code.
-*   RSJP-cpp implements a relaxed parser that works with standard JSON syntax while
+*   RSJp-cpp implements a relaxed parser that works with standard JSON syntax while
     allowing some relaxation (e.g., omitting quotes around object key names).
 *   It is possible to extend the parsers to non-fundamental or user-defined types.
 *   Efficiency considerations:
