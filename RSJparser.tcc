@@ -33,13 +33,13 @@
 #include <iostream>
 
 
-char* RSJobjectbrackets = "{}";
-char* RSJarraybrackets = "[]";
+char const* RSJobjectbrackets = "{}";
+char const* RSJarraybrackets = "[]";
 char RSJobjectassignment = ':';
 char RSJarraydelimiter = ',';
 
-std::vector<char*> RSJbrackets = {RSJobjectbrackets, RSJarraybrackets};
-std::vector<char*> RSJstringquotes = {"\"\"", "''"};
+std::vector<char const*> RSJbrackets = {RSJobjectbrackets, RSJarraybrackets};
+std::vector<char const*> RSJstringquotes = {"\"\"", "''"};
 char RSJcharescape = '\\';
 
 // ============================================================
@@ -136,7 +136,7 @@ std::string strip_outer_quotes (std::string str, char* qq=NULL) {
 
 // ----------------
 
-int is_bracket (char c, std::vector<char*>& bracks, int indx=0) {
+int is_bracket (char c, std::vector<char const*>& bracks, int indx=0) {
     for (int b=0; b<bracks.size(); ++b)
         if (c==bracks[b][indx]) 
             return (b);
