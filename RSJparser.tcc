@@ -100,7 +100,7 @@ public:
 // ============================================================
 // Direct string manipulation functions
 
-std::string strtrim (std::string str, std::string chars=" \n\r", std::string opts="lr") {
+std::string strtrim (std::string str, std::string chars=" \t\n\r", std::string opts="lr") {
     if (str.empty()) return(str);
     
     if (opts.find('l')!=std::string::npos) { // left trim
