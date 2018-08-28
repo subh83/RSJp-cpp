@@ -4,11 +4,26 @@ JavaScript Object Notation (JSON) is an open-standard format that uses human-rea
 
 Example of JSON text:
 ```
-{'animals': [
-    {'name': "cat", 'coordinates': [2, 5, 8], 'height': 1, 'is_vicious': false, 'comment': "It's in fact quite... adorable." },
-    {'name': "tiger", 'coordinates': [-2, -5, -8], 'height': -1, 'is_vicious': true, 'comment': "It's a parity-inverted cat." },
-] }
+{
+    'animals': [
+        {
+            'name': "cat",
+            'coordinates': [2, 5, 8],
+            'height': 1,
+            'is_vicious': false,
+            'comment': "It's in fact quite... adorable."
+        },
+        {
+            'name': "tiger",
+            'coordinates': [-2, -5, -8],
+            'height': -1,
+            'is_vicious': true,
+            'comment': "It's a parity-inverted cat."
+        }
+    ]
+}
 ```
+In the above example, if you want to access the x-ccordinate of the tiger in C++, you would want to do something simple like `jresource["animals"][1]["coordinates"][0]`. This is exactly what the objective of RSJp-spp is.
 
 RSJp-cpp is a template-based JSON parser for C++ that is contained in a single header file.
 *   RSJp-cpp uses STL.
@@ -38,9 +53,10 @@ The structured data is then accessed using the following members:
 ### Example:
 ```C++
     std::string str = "{'RSJ': string data, keyName: [2,3,5,7]}";
-    std::cout  <<  RSJresource(str)["keyName"][2].as<int>();     // prints 5
-    std::cout  <<  RSJresource(str)["RSJ"].as<std::string>("default string"); // prints "string data"
-    std::cout  <<  RSJresource(str)["JSON"].as<std::string>("default string"); // prints "default string"
+    RSJresource my_json(str);
+    std::cout  <<  my_json["keyName"][2].as<int>();     // prints 5
+    std::cout  <<  my_json["RSJ"].as<std::string>("default string"); // prints "string data"
+    std::cout  <<  my_json["JSON"].as<std::string>("default string"); // prints "default string"
 ```
 
 ### User-defined Types:
