@@ -1,32 +1,14 @@
-```
-/** **************************************************************************************
-*                                                                                        *
-*    A Ridiculously Simple JSON parser for C++ (RSJp-cpp)                                *
-*    Version 1.0b                                                                        *
-*    ----------------------------------------------------------                          *
-*    Copyright (C) 2017  Subhrajit Bhattacharya                                          *
-*                                                                                        *
-*    This program is free software: you can redistribute it and/or modify                *
-*    it under the terms of the GNU General Public License as published by                *
-*    the Free Software Foundation, either version 3 of the License, or                   *
-*    (at your option) any later version.                                                 *
-*                                                                                        *
-*    This program is distributed in the hope that it will be useful,                     *
-*    but WITHOUT ANY WARRANTY; without even the implied warranty of                      *
-*    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the                       *
-*    GNU General Public License for more details <http://www.gnu.org/licenses/>.         *
-*                                                                                        *
-*                                                                                        *
-*    Contact:  subhrajit@gmail.com                                                       *
-*              https://www.lehigh.edu/~sub216/ , http://subhrajit.net/                   *
-*                                                                                        *
-*                                                                                        *
-*************************************************************************************** **/
-```
-
 JavaScript Object Notation (JSON) is an open-standard format that uses human-readable text
     to transmit data objects consisting of attribute–value pairs.
     More info: https://en.wikipedia.org/wiki/JSON 
+
+Example of JSON text:
+```
+{'animals': [
+    {'name': "cat", 'coordinates': [2, 5, 8], 'height': 1, 'is_vicious': false, 'comment': "It's in fact quite... adorable." },
+    {'name': "tiger", 'coordinates': [-2, -5, -8], 'height': -1, 'is_vicious': true, 'comment': "It's a parity-inverted cat." },
+] }
+```
 
 RSJp-cpp is a template-based JSON parser for C++ that is contained in a single header file.
 *   RSJp-cpp uses STL.
@@ -103,4 +85,32 @@ Compile & run 'json_test.cpp':
 ```
     g++ -std=gnu++11 -Og -o json_test json_test.cpp
     ./json_test
+```
+
+-----------------------------
+License:
+```
+/** **************************************************************************************
+*                                                                                        *
+*    A Ridiculously Simple JSON parser for C++ (RSJp-cpp)                                *
+*    Version 1.0b                                                                        *
+*    ----------------------------------------------------------                          *
+*    Copyright (C) 2017  Subhrajit Bhattacharya                                          *
+*                                                                                        *
+*    This program is free software: you can redistribute it and/or modify                *
+*    it under the terms of the GNU General Public License as published by                *
+*    the Free Software Foundation, either version 3 of the License, or                   *
+*    (at your option) any later version.                                                 *
+*                                                                                        *
+*    This program is distributed in the hope that it will be useful,                     *
+*    but WITHOUT ANY WARRANTY; without even the implied warranty of                      *
+*    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the                       *
+*    GNU General Public License for more details <http://www.gnu.org/licenses/>.         *
+*                                                                                        *
+*                                                                                        *
+*    Contact:  subhrajit@gmail.com                                                       *
+*              https://www.lehigh.edu/~sub216/ , http://subhrajit.net/                   *
+*                                                                                        *
+*                                                                                        *
+*************************************************************************************** **/
 ```
