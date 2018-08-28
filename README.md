@@ -23,7 +23,7 @@ Example of JSON text:
     ]
 }
 ```
-In the above example, if you want to access the x-ccordinate of the tiger in C++, you would want to do something simple like `jresource["animals"][1]["coordinates"][0]`. This is exactly what the objective of RSJp-spp is.
+In the above example, if you want to access, say, the x-ccordinate of the tiger, you would want to do something simple like `my_json_resource["animals"][1]["coordinates"][0]`. This is precisely what RSJp-cpp lets you do.
 
 RSJp-cpp is a template-based JSON parser for C++ that is contained in a single header file.
 *   RSJp-cpp uses STL.
