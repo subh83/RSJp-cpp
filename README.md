@@ -56,8 +56,8 @@ Other useful declarations and member functions:
     typedef std::vector <RSJresource>                       RSJarray;
     enum RSJresourceType { RSJ_UNINITIATED, RSJ_UNKNOWN, RSJ_OBJECT, RSJ_ARRAY, RSJ_LEAF };
     
-    RSJobject& RSJresource::as_object(); // get reference to object as an unordred_map.
-    RSJarray& RSJresource::as_array(); // get reference to object as a vector.
+    RSJobject& RSJresource::as_object(); // get reference to object as 'std::unordered_map<std::string,RSJresource>'.
+    RSJarray& RSJresource::as_array(); // get reference to array as 'std::vector<RSJresource>'.
     
     int RSJresource::size (void);
     bool RSJresource::exists (void);
