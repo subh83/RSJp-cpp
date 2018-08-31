@@ -119,6 +119,7 @@ Basic usage:
 ```C++
     std::cout << "This animal lives in a " << my_resource["coordinates"].size() << " dimensional space." << std::endl;
     // Output: This animal lives in a 3 dimensional space.
+    
     for (auto it=my_resource["coordinates"].as_array().begin(); it!=my_resource["coordinates"].as_array().end(); ++it)
         std::cout << " | " << it->as<int>();
     std::cout << " | " << std::endl;
