@@ -1,6 +1,6 @@
 JavaScript Object Notation (JSON) is a text-based presentation of structured data consisting of objects (attribute–value pairs) and arrays. More info: https://en.wikipedia.org/wiki/JSON .
 
-RSJp-cpp is a template-based C++ parser (and emitter) for JSON texts. RSJp-cpp is easy to use and parses the JSON text at an on-demand basis.
+RSJp-cpp (a Ridiculously Simple JSON Parser for C++) is a template-based C++ parser (and emitter) for JSON texts. RSJp-cpp is easy to use and parses the JSON text at an on-demand basis.
 
 ### Simple Example:
 ```C++
@@ -146,7 +146,7 @@ License:
 ```
 /** **************************************************************************************
 *                                                                                        *
-*    A Ridiculously Simple RSJ Parser for C++ (RSJp-cpp)                                 *
+*    A Ridiculously Simple JSON Parser for C++ (RSJp-cpp)                                *
 *    Version 2.0                                                                         *
 *    ----------------------------------------------------------                          *
 *    Copyright (C) 2018  Subhrajit Bhattacharya                                          *
