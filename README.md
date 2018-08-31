@@ -104,11 +104,11 @@ Basic usage:
 
 * Access structured JSON data:
 ```C++
-      std::cout << my_resource["coordinates"][1].as<int>(); // prints 5
-      std::cout << my_resource["is_vicious"].as<bool>(); // prints 0
-      std::cout << my_resource["comment"].as<std::string>() << std::endl; // prints "It's in fact quite...	 adorable."
-      std::cout << my_resource["height"].as<int>(-1) << std::endl; // prints 1
-      std::cout << my_resource["width"].as<int>(-1) << std::endl; // prints -1
+    std::cout << my_resource["coordinates"][1].as<int>() << std::endl; // prints 5
+    std::cout << my_resource["is_vicious"].as<bool>() << std::endl; // prints 0
+    std::cout << my_resource["comment"].as<std::string>() << std::endl; // prints "It's in fact quite...	 adorable."
+    std::cout << my_resource["height"].as<int>(-1) << std::endl; // prints 1
+    std::cout << my_resource["width"].as<int>(-1) << std::endl; // prints -1
  ```
     
 -----------------------------
