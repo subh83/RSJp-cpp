@@ -1,33 +1,17 @@
-JavaScript Object Notation (JSON) is an open-standard format that uses human-readable text
-    to transmit data objects consisting of attribute–value pairs.
-    More info: https://en.wikipedia.org/wiki/JSON 
+JavaScript Object Notation (JSON) is a text-based presentation of structured data consisting of objects (attribute–value pairs) and arrays. More info: https://en.wikipedia.org/wiki/JSON 
+RSJp-cpp is a parser (and emitter) for JSON texts that is easy to use and parses the text at an on-demand basis.
 
-Example of JSON text:
+### Simple Example:
+```C++
+    std::string str = "{'RSJ': 'string data', 'keyName': [2,3,5,7]}";
+    RSJresource my_json(str);
+    std::cout  <<  my_json["keyName"][2].as<int>();     // prints 5
+    std::cout  <<  my_json["RSJ"].as<std::string>("default string"); // prints "string data"
+    std::cout  <<  my_json["JSON"].as<std::string>("default string"); // prints "default string"
 ```
-{
-    'animals': [
-        {
-            'name': "cat",
-            'coordinates': [2, 5, 8],
-            'height': 1,
-            'is_vicious': false,
-            'comment': "It's in fact quite... adorable."
-        },
-        {
-            'name': "tiger",
-            'coordinates': [-2, -5, -8],
-            'height': -1,
-            'is_vicious': true,
-            'comment': "It's a parity-inverted cat."
-        }
-    ]
-}
-```
-In the above example, if you want to access, say, the x-ccordinate of the tiger, you would want to do something simple like `my_json_resource["animals"][1]["coordinates"][0]`. This is precisely what RSJp-cpp lets you do.
 
 RSJp-cpp is a template-based JSON parser for C++ that is contained in a single header file.
-*   RSJp-cpp uses STL.
-*   RSJp-cpp does not depend on any external library.
+*   RSJp-cpp uses STL and does not depend on any external library.
 *   RSJp-cpp is template-based and there is nothing to build/install. The entire library is 
     contained in a single header file (`RSJparser.tcc`) that you simply include in your code.
 *   RSJp-cpp implements a relaxed parser that works with standard JSON syntax while
@@ -50,14 +34,6 @@ The structured data is then accessed using the following members:
     template <class dataType> dataType RSJresource::as (const dataType& def = dataType());    // for JSON data (with value defaulting to 'def' if field does not exist)
 ```
 
-### Example:
-```C++
-    std::string str = "{'RSJ': 'string data', keyName: [2,3,5,7]}";
-    RSJresource my_json(str);
-    std::cout  <<  my_json["keyName"][2].as<int>();     // prints 5
-    std::cout  <<  my_json["RSJ"].as<std::string>("default string"); // prints "string data"
-    std::cout  <<  my_json["JSON"].as<std::string>("default string"); // prints "default string"
-```
 ### Other useful declarations and member functions:
 ```C++
     typedef std::unordered_map <std::string,RSJresource>    RSJobject;
@@ -70,7 +46,7 @@ The structured data is then accessed using the following members:
     int RSJresource::size (void);
     bool RSJresource::exists (void);
     RSJresourceType RSJresource::type (void);
-    std::string RSJresource::print (bool print_comments=false); // outputs as text
+    std::string RSJresource::print (bool print_comments=false); // outputs as text. Note: 'print()' parses the entire JSON if it's not already parsed.
     
     template <class dataType> 
         std::unordered_map<std::string,dataType> RSJresource::as_map (); // get copy of object as 'std::unordered_map<std::string,dataType>'
