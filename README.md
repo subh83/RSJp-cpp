@@ -110,6 +110,38 @@ Basic usage:
     std::cout << my_resource["height"].as<int>(-1) << std::endl; // prints 1
     std::cout << my_resource["width"].as<int>(-1) << std::endl; // prints -1
  ```
+ 
+* Iterate over an array or object:
+```C++
+    std::cout << "This animal lives in a " << my_resource["coordinates"].size() << " dimensional space." << std::endl;
+    // Output: This animal lives in a 3 dimensional space.
+    for (auto it=my_resource["coordinates"].as_array().begin(); it!=my_resource["coordinates"].as_array().end(); ++it)
+        std::cout << " | " << it->as<int>();
+    std::cout << " | " << std::endl;
+    // Output: | 2 | 5 | 8 |
+```
+
+* Change / insert contents and print:
+```C++
+    my_resource["coordinates"][1] = -5; // change Y-coordinate
+    my_resource["color"] = "black";
+    std::cout << "changed contents:\n" << my_resource.print() << std::endl;
+    /* Output:
+        changed contents:
+        {
+            'comment': 'It\'s in fact quite...\t adorable.',
+            'is_vicious': false,
+            'height': 1,
+            'coordinates': [
+                2,
+                -5,
+                8
+            ],
+            'color': black,
+            'animal': cat
+        }
+    */
+```
     
 -----------------------------
 Compile & run 'json_example.cpp':
