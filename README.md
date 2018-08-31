@@ -50,7 +50,15 @@ The structured data is then accessed using the following members:
     template <class dataType> dataType RSJresource::as (const dataType& def = dataType());    // for JSON data (with value defaulting to 'def' if field does not exist)
 ```
 
-Other useful declarations and member functions:
+### Example:
+```C++
+    std::string str = "{'RSJ': 'string data', keyName: [2,3,5,7]}";
+    RSJresource my_json(str);
+    std::cout  <<  my_json["keyName"][2].as<int>();     // prints 5
+    std::cout  <<  my_json["RSJ"].as<std::string>("default string"); // prints "string data"
+    std::cout  <<  my_json["JSON"].as<std::string>("default string"); // prints "default string"
+```
+### Other useful declarations and member functions:
 ```C++
     typedef std::unordered_map <std::string,RSJresource>    RSJobject;
     typedef std::vector <RSJresource>                       RSJarray;
@@ -68,15 +76,6 @@ Other useful declarations and member functions:
         std::unordered_map<std::string,dataType> RSJresource::as_map (); // get copy of object as 'std::unordered_map<std::string,dataType>'
     template <class dataType> 
         std::vector<dataType> RSJresource::as_vector (); // get copy of array as 'std::vector<dataType>'
-```
-
-### Example:
-```C++
-    std::string str = "{'RSJ': 'string data', keyName: [2,3,5,7]}";
-    RSJresource my_json(str);
-    std::cout  <<  my_json["keyName"][2].as<int>();     // prints 5
-    std::cout  <<  my_json["RSJ"].as<std::string>("default string"); // prints "string data"
-    std::cout  <<  my_json["JSON"].as<std::string>("default string"); // prints "default string"
 ```
 
 ### User-defined Types:
