@@ -67,7 +67,7 @@ Other useful declarations and member functions:
 
 ### Example:
 ```C++
-    std::string str = "{'RSJ': string data, keyName: [2,3,5,7]}";
+    std::string str = "{'RSJ': 'string data', keyName: [2,3,5,7]}";
     RSJresource my_json(str);
     std::cout  <<  my_json["keyName"][2].as<int>();     // prints 5
     std::cout  <<  my_json["RSJ"].as<std::string>("default string"); // prints "string data"
