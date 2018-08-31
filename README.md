@@ -50,6 +50,21 @@ The structured data is then accessed using the following members:
     template <class dataType> dataType RSJresource::as (const dataType& def = dataType());    // for JSON data (with value defaulting to 'def' if field does not exist)
 ```
 
+Other useful declarations and member functions:
+```C++
+    typedef std::unordered_map <std::string,RSJresource>    RSJobject;
+    typedef std::vector <RSJresource>                       RSJarray;
+    enum RSJresourceType { RSJ_UNINITIATED, RSJ_UNKNOWN, RSJ_OBJECT, RSJ_ARRAY, RSJ_LEAF };
+    
+    RSJobject& RSJresource::as_object(); // get reference to object as an unordred_map.
+    RSJarray& RSJresource::as_array(); // get reference to object as a vector.
+    
+    int RSJresource::size (void);
+    bool RSJresource::exists (void);
+    RSJresourceType RSJresource::type (void);
+    std::string RSJresource::print (bool print_comments=false); // outputs as text
+```
+
 ### Example:
 ```C++
     std::string str = "{'RSJ': string data, keyName: [2,3,5,7]}";
