@@ -63,6 +63,11 @@ Other useful declarations and member functions:
     bool RSJresource::exists (void);
     RSJresourceType RSJresource::type (void);
     std::string RSJresource::print (bool print_comments=false); // outputs as text
+    
+    template <class dataType> 
+        std::unordered_map<std::string,dataType> RSJresource::as_map (); // get copy of object as 'std::unordered_map<std::string,dataType>'
+    template <class dataType> 
+        std::vector<dataType> RSJresource::as_vector (); // get copy of array as 'std::vector<dataType>'
 ```
 
 ### Example:
