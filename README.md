@@ -1,13 +1,14 @@
-JavaScript Object Notation (JSON) is a text-based presentation of structured data consisting of objects (attribute–value pairs) and arrays. More info: https://en.wikipedia.org/wiki/JSON 
-RSJp-cpp is a parser (and emitter) for JSON texts that is easy to use and parses the text at an on-demand basis.
+JavaScript Object Notation (JSON) is a text-based presentation of structured data consisting of objects (attribute–value pairs) and arrays. More info: https://en.wikipedia.org/wiki/JSON .
+
+RSJp-cpp is a template-based C++ parser (and emitter) for JSON texts. RSJp-cpp is easy to use and parses the JSON text at an on-demand basis.
 
 ### Simple Example:
 ```C++
     std::string str = "{'RSJ': 'string data', 'keyName': [2,3,5,7]}";
     RSJresource my_json(str);
-    std::cout  <<  my_json["keyName"][2].as<int>();     // prints 5
-    std::cout  <<  my_json["RSJ"].as<std::string>("default string"); // prints "string data"
-    std::cout  <<  my_json["JSON"].as<std::string>("default string"); // prints "default string"
+    std::cout  <<  my_json["keyName"][2].as<int>() << std::endl;     // prints 5
+    std::cout  <<  my_json["RSJ"].as<std::string>("default string") << std::endl; // prints "string data"
+    std::cout  <<  my_json["JSON"].as<std::string>("default string") << std::endl; // prints "default string"
 ```
 
 RSJp-cpp is a template-based JSON parser for C++ that is contained in a single header file.
@@ -20,7 +21,14 @@ RSJp-cpp is a template-based JSON parser for C++ that is contained in a single h
 *   Efficiency considerations:
     - Parses parts of the JSON text at an on-demand basis.
     - Internally stores parsed data for quick future reference.
-    - TODO: Will use 'istream' for reading JSON text instead of 'string'.
+*   Security warning: RSJp-cpp is designed with speed and ease of use in mind. This has necessitate
+    RSJp-cpp to skip some syntax and sanity checks on the JSON text itself. If the JSON text has
+    invalid JSON syntax, most of the time RSJp-cpp will still parse it without complaining, 
+    although its behavior may be unexpected / undefined. So, if the JSON text is a potential source of
+    infiltration (e.g., user input in a web-based application), RSJp-cpp should not be used.
+    Future version of RSJp-cpp will have added security features that can be optionally turned on for
+    performing syntax checks on the JSON text.
+
 
 ### Use:
 The header, `RSJparser.tcc`, provides the 'RSJresource' class that can be initialized using a 'std::string':
