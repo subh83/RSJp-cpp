@@ -1,6 +1,6 @@
 /** **************************************************************************************
 *                                                                                        *
-*    A Ridiculously Simple RSJ Parser for C++ (RSJp-cpp)                                 *
+*    A Ridiculously Simple JSON Parser for C++ (RSJp-cpp)                                *
 *    Version 2.0                                                                         *
 *    ----------------------------------------------------------                          *
 *    Copyright (C) 2018  Subhrajit Bhattacharya                                          *
