@@ -97,10 +97,10 @@ Basic usage:
  ```
     
 -----------------------------
-Compile & run 'json_test.cpp':
+Compile & run 'json_example.cpp':
 ```
-    g++ -std=gnu++11 -Og -o json_test json_test.cpp
-    ./json_test
+    g++ -std=gnu++11 -Og -o json_example json_example.cpp
+    ./json_example
 ```
 
 -----------------------------
@@ -108,10 +108,10 @@ License:
 ```
 /** **************************************************************************************
 *                                                                                        *
-*    A Ridiculously Simple JSON parser for C++ (RSJp-cpp)                                *
-*    Version 1.0b                                                                        *
+*    A Ridiculously Simple RSJ Parser for C++ (RSJp-cpp)                                 *
+*    Version 2.0                                                                         *
 *    ----------------------------------------------------------                          *
-*    Copyright (C) 2017  Subhrajit Bhattacharya                                          *
+*    Copyright (C) 2018  Subhrajit Bhattacharya                                          *
 *                                                                                        *
 *    This program is free software: you can redistribute it and/or modify                *
 *    it under the terms of the GNU General Public License as published by                *
