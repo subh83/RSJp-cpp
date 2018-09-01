@@ -21,9 +21,8 @@ RSJp-cpp is a template-based JSON parser for C++ that is contained in a single h
 *   Efficiency considerations:
     - Parses parts of the JSON text at an on-demand basis.
     - Internally stores parsed data for quick future reference.
-*   Security warning: RSJp-cpp is designed with speed and ease of use in mind. This has necessitated
-    RSJp-cpp to skip some syntax and sanity checks on the JSON text itself. If the JSON text has
-    invalid JSON syntax, most of the time RSJp-cpp will still parse it without complaining, 
+*   Security warning: RSJp-cpp skips most syntax and sanity checks on the JSON text itself. If the JSON
+    text has invalid JSON syntax, most of the time RSJp-cpp will still parse it without complaining, 
     although its behavior may be unexpected / undefined. So, if the JSON text is a potential source of
     infiltration (e.g., user input in a web-based application), RSJp-cpp should not be used.
     Future version of RSJp-cpp will have added security features that can be optionally turned on for
