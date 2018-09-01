@@ -104,7 +104,7 @@ int is_bracket (char c, std::vector<char const*>& bracks, int indx=0) {
     return (-1);
 }
 
-std::vector<std::string> split_RSJ_array (std::string str) {
+std::vector<std::string> split_RSJ_array (std::string str) { // TODO: Make efficient. This function is speed boottleneck.
     // splits, while respecting brackets and escapes
     std::vector<std::string> ret;
     
@@ -239,8 +239,12 @@ public:
     template <class dataType>
     RSJresource (dataType d) : RSJresource(std::to_string(d)) { }
     
-    // read from file
+    // read from file and stream
     RSJresource (std::istream& is) : _exists (true), parsed_data_p (NULL) {
+        data = std::string ( (std::istreambuf_iterator<char>(is)), (std::istreambuf_iterator<char>()) );
+    }
+    RSJresource (std::ifstream& ifs) : _exists (true), parsed_data_p (NULL) {
+        std::istream& is = ifs;
         data = std::string ( (std::istreambuf_iterator<char>(is)), (std::istreambuf_iterator<char>()) );
     }
     
@@ -254,6 +258,7 @@ public:
     // ------------------------------------
     // parsers
     RSJresourceType parse (bool force=false);
+    void parse_full (bool force=false, int* parse_count_for_verbose_p=NULL); // recursively parse the entire JSON text
     RSJobject& as_object (bool force=false);
     RSJarray& as_array (bool force=false);
     
@@ -452,6 +457,24 @@ RSJresourceType RSJresource::parse (bool force) {
     if (!parsed_data_p)  parsed_data_p = new RSJparsedData;
     if (parsed_data_p->type==RSJ_UNKNOWN || force)  parsed_data_p->parse (data, RSJ_UNKNOWN);
     return (parsed_data_p->type);
+}
+
+void RSJresource::parse_full (bool force, int* parse_count_for_verbose_p) {
+    if (!parsed_data_p)  parsed_data_p = new RSJparsedData;
+    if (parsed_data_p->type==RSJ_UNKNOWN || force)  parsed_data_p->parse (data, RSJ_UNKNOWN);
+    // verbose
+    if (parse_count_for_verbose_p) {
+        (*parse_count_for_verbose_p)++;
+        if ( (*parse_count_for_verbose_p) % 100 == 0)
+            std::cout << "parse_full: " << (*parse_count_for_verbose_p) << " calls." << std::endl;
+    }
+    // recursive parse children if not already parsed
+    if (parsed_data_p->type==RSJ_OBJECT) 
+        for (auto it=parsed_data_p->object.begin(); it!=parsed_data_p->object.end(); ++it)
+            it->second.parse_full (force, parse_count_for_verbose_p);
+    else if (parsed_data_p->type==RSJ_ARRAY)
+        for (auto it=parsed_data_p->array.begin(); it!=parsed_data_p->array.end(); ++it) 
+            it->parse_full (force, parse_count_for_verbose_p);
 }
 
 RSJobject& RSJresource::as_object (bool force) {
