@@ -12,8 +12,11 @@
 !/makefile
 !/RSJparser.tcc
 
+# test files
+# ----------
+
 !tests/
 !tests/*.cpp
-!tests/json_files
+!tests/json_files/
 !tests/json_files/*.json
 
