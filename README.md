@@ -144,7 +144,7 @@ Compile & run 'benchmark.cpp':
 ```
     cd tests
     g++ -std=gnu++11 -I.. -Og -o benchmark benchmark.cpp
-    ./json_example
+    ./benchmark
 ```
 
 Copy 'RSJparser.tcc' to system folder:
@@ -160,7 +160,7 @@ License:
 /** **************************************************************************************
 *                                                                                        *
 *    A Ridiculously Simple JSON Parser for C++ (RSJp-cpp)                                *
-*    Version 2.0                                                                         *
+*    Version 2.x                                                                         *
 *    ----------------------------------------------------------                          *
 *    Copyright (C) 2018  Subhrajit Bhattacharya                                          *
 *                                                                                        *
