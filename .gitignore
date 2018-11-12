@@ -1,0 +1,19 @@
+# Ignore everything:
+*
+
+# Except for the following:
+# ========================
+
+# core files
+# ----------
+
+!/.gitignore
+!/README.md
+!/makefile
+!/RSJparser.tcc
+
+!tests/
+!tests/*.cpp
+!tests/json_files
+!tests/json_files/*.json
+
