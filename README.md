@@ -15,6 +15,7 @@ RSJp-cpp is a template-based JSON parser for C++ that is contained in a single h
 *   RSJp-cpp uses STL and does not depend on any external library.
 *   RSJp-cpp is template-based and there is nothing to build/install. The entire library is 
     contained in a single header file (`RSJparser.tcc`) that you simply include in your code.
+    However, you can optionally copy the header to system folder by executing `sudo make install`.
 *   RSJp-cpp implements a relaxed parser that works with standard JSON syntax while
     allowing some relaxation (e.g., omitting quotes around object key names).
 *   It is possible to extend the parsers to non-fundamental or user-defined types.
@@ -134,8 +135,21 @@ Basic usage:
 -----------------------------
 Compile & run 'json_example.cpp':
 ```
-    g++ -std=gnu++11 -Og -o json_example json_example.cpp
+    cd tests
+    g++ -std=gnu++11 -I.. -Og -o json_example json_example.cpp
     ./json_example
+```
+
+Compile & run 'benchmark.cpp':
+```
+    cd tests
+    g++ -std=gnu++11 -I.. -Og -o benchmark benchmark.cpp
+    ./json_example
+```
+
+Copy 'RSJparser.tcc' to system folder:
+```
+    sudo make install
 ```
 
 

@@ -1,7 +1,7 @@
 /** **************************************************************************************
 *                                                                                        *
 *    A Ridiculously Simple JSON Parser for C++ (RSJp-cpp)                                *
-*    Version 2.0                                                                         *
+*    Version 2.x                                                                         *
 *    ----------------------------------------------------------                          *
 *    Copyright (C) 2018  Subhrajit Bhattacharya                                          *
 *                                                                                        *
@@ -104,7 +104,7 @@ int is_bracket (char c, std::vector<char const*>& bracks, int indx=0) {
     return (-1);
 }
 
-std::vector<std::string> split_RSJ_array (std::string str) { // TODO: Make efficient. This function is speed boottleneck.
+std::vector<std::string> split_RSJ_array (const std::string& str) { // TODO: Make efficient. This function is speed bottleneck.
     // splits, while respecting brackets and escapes
     std::vector<std::string> ret;
     

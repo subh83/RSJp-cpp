@@ -1,7 +1,7 @@
 /** **************************************************************************************
 *                                                                                        *
 *    A Ridiculously Simple JSON Parser for C++ (RSJp-cpp)                                *
-*    Version 2.0                                                                         *
+*    Version 2.x                                                                         *
 *    ----------------------------------------------------------                          *
 *    Copyright (C) 2018  Subhrajit Bhattacharya                                          *
 *                                                                                        *
@@ -95,3 +95,4 @@ int main(int argc, char *argv[])
     // ----
     std::cout << "\nFinal complete resource printed:\n" << my_resource.print() << std::endl;
 }
+
