@@ -182,4 +182,4 @@ License:
 *************************************************************************************** **/
 ```
 
-`test/json_files/canada.json` is included from https://github.com/serde-rs/json-benchmark/blob/master/data/canada.json under the terms of Apache License.
+`tests/json_files/canada.json` is included from https://github.com/serde-rs/json-benchmark/blob/master/data/canada.json under the terms of Apache License.
