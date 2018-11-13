@@ -477,10 +477,17 @@ void RSJresource::parse_full (bool force, int* parse_count_for_verbose_p) {
             it->parse_full (force, parse_count_for_verbose_p);
 }
 
+// ------------------------------------------------------------
+
 RSJobject& RSJresource::as_object (bool force) {
     if (!parsed_data_p)  parsed_data_p = new RSJparsedData;
     if (parsed_data_p->type==RSJ_UNKNOWN || force)  parsed_data_p->parse (data, RSJ_OBJECT);
     return (parsed_data_p->object);
+}
+
+RSJresource& RSJresource::operator[] (std::string key) { // returns reference
+    return ( (as_object())[key] ); // will return empty resource (with _exists==false) if 
+                                            // either this resource does not exist, is not an object, or the key does not exist
 }
 
 RSJarray& RSJresource::as_array (bool force) {
@@ -489,10 +496,19 @@ RSJarray& RSJresource::as_array (bool force) {
     return (parsed_data_p->array);
 }
 
+RSJresource& RSJresource::operator[] (int indx) { // returns reference
+    as_array();
+    if (indx >= parsed_data_p->array.size())
+        parsed_data_p->array.resize(indx+1); // insert empty resources
+    return (parsed_data_p->array[indx]); // will return empty resource (with _exists==false) if 
+                                            // either this resource does not exist, is not an object, or the key does not exist
+}
+
+// ------------------------------------------------------------
 // special 'as':
 
 template <class dataType, class vectorType>
-vectorType RSJresource::as_vector (const vectorType& def) {
+vectorType RSJresource::as_vector (const vectorType& def) { // returns copy -- for being consistent with other 'as' specializations
     if (!exists()) return (def);
     vectorType ret;
     as_array();
@@ -502,7 +518,7 @@ vectorType RSJresource::as_vector (const vectorType& def) {
 }
 
 template <class dataType, class mapType>
-mapType RSJresource::as_map (const mapType& def) {
+mapType RSJresource::as_map (const mapType& def) { // returns copy -- for being consistent with other 'as' specializations
     if (!exists()) return (def);
     mapType ret;
     as_object();
@@ -527,27 +543,11 @@ RSJobject RSJresource::as<RSJobject> (const RSJobject& def) { // returns copy --
     return (as_object());
 }
 
-RSJresource& RSJresource::operator[] (std::string key) { // returns reference
-    return ( (as_object())[key] ); // will return empty resource (with _exists==false) if 
-                                            // either this resource does not exist, is not an object, or the key does not exist
-}
-
-// ------------------------------------
-// RSJ types
-
 // RSJarray
 template <>
 RSJarray  RSJresource::as<RSJarray> (const RSJarray& def) { // returns copy -- for being consistent with other 'as' specializations
     if (!exists()) return (def);
     return (as_array());
-}
-
-RSJresource& RSJresource::operator[] (int indx) { // returns reference
-    as_array();
-    if (indx >= parsed_data_p->array.size())
-        parsed_data_p->array.resize(indx+1); // insert empty resources
-    return (parsed_data_p->array[indx]); // will return empty resource (with _exists==false) if 
-                                            // either this resource does not exist, is not an object, or the key does not exist
 }
 
 // ------------------------------------
