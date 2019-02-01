@@ -31,6 +31,7 @@ uninstall:
 tests:
 	cd tests && \
 	g++ -std=gnu++11 -I.. -Og -o json_example json_example.cpp && \
-	g++ -std=gnu++11 -I.. -Og -o benchmark benchmark.cpp
+	g++ -std=gnu++11 -I.. -Og -o benchmark benchmark.cpp && \
+	g++ -std=gnu++11 -I.. -Og -o json_parse_file json_parse_file.cpp
 
 
