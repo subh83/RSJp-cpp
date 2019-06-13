@@ -281,6 +281,7 @@ public:
     bool exists (void) { return (_exists); }
     bool is_parsed (void) { return (parsed_data_p!=NULL); }
     RSJresourceType type (void);
+    // emitter
     std::string as_str (bool print_comments=false, bool update_data=true);
     void print (bool print_comments=false, bool update_data=true) 
         { std::cout << as_str(print_comments,update_data) << std::endl; }

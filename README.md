@@ -24,7 +24,7 @@ RSJp-cpp is a template-based JSON parser for C++ that is contained in a single h
 
 
 ### Use:
-The header, `RSJparser.tcc`, provides the 'RSJresource' class that can be initialized using a 'std::string':
+The header, `RSJparser.tcc`, provides the `RSJresource` class that can be initialized using a `std::string` of the JSON text:
 ```C++
     RSJresource::RSJresource (std::string json_text);          // constructor
 ```
@@ -42,6 +42,7 @@ The structured data is then accessed using the following members:
     int  RSJresource::as<int> (const int& def);
     double  RSJresource::as<double> (const double& def);
     bool  RSJresource::as<bool> (const bool& def);
+    
     // RSJ-specific types:
     RSJobject RSJresource::as<RSJobject> (const RSJobject& def);
     RSJarray  RSJresource::as<RSJarray> (const RSJarray& def);
@@ -94,7 +95,7 @@ Basic usage:
     #include "RSJparser.tcc"
 ```
 
-* Create an instance of 'RSJresource' using a string or file stream:
+* Create an instance of `RSJresource` using a string or file stream:
 ```C++
       std::string str = "{'animal':cat, coordinates: [2, 5, 8], height: 1, \nis_vicious: false, comment:'It\\'s in fact quite...\\t adorable.' }";
       RSJresource my_resource (str);
@@ -127,7 +128,7 @@ Basic usage:
 
 * Change / insert contents and print:
 ```C++
-    my_resource["coordinates"][1] = -5; // change Y-coordinate
+    my_resource["coordinates"][1] = -5; // change Y-coordinate (uses 'std::to_string')
     my_resource["color"] = "black";
     std::cout << "changed contents:\n" << my_resource.as_str() << std::endl;
     /* Output:
