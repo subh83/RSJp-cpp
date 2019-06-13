@@ -35,23 +35,24 @@
 #include <climits>
 
 
-char const* RSJobjectbrackets = "{}";
-char const* RSJarraybrackets = "[]";
-char RSJobjectassignment = ':';
-char RSJarraydelimiter = ',';
+static char const* RSJobjectbrackets = "{}";
+static char const* RSJarraybrackets = "[]";
+static char RSJobjectassignment = ':';
+static char RSJarraydelimiter = ',';
 
-std::vector<char const*> RSJbrackets = {RSJobjectbrackets, RSJarraybrackets};
-std::vector<char const*> RSJstringquotes = {"\"\"", "''"};
-char RSJcharescape = '\\';
-std::string RSJlinecommentstart = "//";
+static std::vector<char const*> RSJbrackets = {RSJobjectbrackets, RSJarraybrackets};
+static std::vector<char const*> RSJstringquotes = {"\"\"", "''"};
+static char RSJcharescape = '\\';
+static std::string RSJlinecommentstart = "//";
 
-std::string RSJprinttab = "    ";
+static std::string RSJprinttab = "    ";
 
 enum RSJresourceType { RSJ_UNINITIATED, RSJ_UNKNOWN, RSJ_OBJECT, RSJ_ARRAY, RSJ_LEAF };
 
 // ============================================================
 // Direct string manipulation functions
 
+inline 
 std::string to_string (RSJresourceType rt) {
     switch (rt) {
         case RSJ_UNINITIATED: return("RSJ_UNINITIATED");
@@ -62,6 +63,7 @@ std::string to_string (RSJresourceType rt) {
     }
 }
 
+inline 
 std::string strtrim (std::string str, std::string chars=" \t\n\r", int max_count=-1, std::string opts="lr") {
     if (str.empty()) return(str);
     if (max_count<0) max_count = str.length();
@@ -83,6 +85,7 @@ std::string strtrim (std::string str, std::string chars=" \t\n\r", int max_count
     return (str);
 }
 
+inline 
 std::string strip_outer_quotes (std::string str, char* qq=NULL) {
     str = strtrim (str);
     
@@ -99,6 +102,7 @@ std::string strip_outer_quotes (std::string str, char* qq=NULL) {
 
 // ----------------
 
+inline 
 int is_bracket (char c, std::vector<char const*>& bracks, int indx=0) {
     for (int b=0; b<bracks.size(); ++b)
         if (c==bracks[b][indx]) 
@@ -106,6 +110,7 @@ int is_bracket (char c, std::vector<char const*>& bracks, int indx=0) {
     return (-1);
 }
 
+inline 
 std::vector<std::string> split_RSJ_array (const std::string& str) { // TODO: Make efficient. This function is speed bottleneck.
     // splits, while respecting brackets and escapes
     std::vector<std::string> ret;
@@ -196,7 +201,7 @@ std::vector<std::string> split_RSJ_array (const std::string& str) { // TODO: Mak
     return (ret);
 }
 
-
+inline 
 std::string insert_tab_after_newlines (std::string str) {
     for (int a=0; a<str.length(); ++a)
         if (str[a]=='\n') {
@@ -486,9 +491,9 @@ void RSJresource::parse_full (bool force, int max_depth, int* parse_count_for_ve
 
 // ------------------------------------------------------------
 // ============================================================
-// FAST PARSER (Under Construction)
+// FAST PARSER (Under construction. DO NOT use the following functions in your application.)
 
-
+inline 
 int seek_next (std::string* str_p, int start_pos, char character) {
     
 }
@@ -683,14 +688,14 @@ mapType RSJresource::as_map (const mapType& def) { // returns copy -- for being 
 
 
 // RSJobject
-template <>
+template <> inline 
 RSJobject RSJresource::as<RSJobject> (const RSJobject& def) { // returns copy -- for being consistent with other 'as' specializations
     if (!exists()) return (def);
     return (as_object());
 }
 
 // RSJarray
-template <>
+template <> inline 
 RSJarray  RSJresource::as<RSJarray> (const RSJarray& def) { // returns copy -- for being consistent with other 'as' specializations
     if (!exists()) return (def);
     return (as_array());
@@ -700,7 +705,7 @@ RSJarray  RSJresource::as<RSJarray> (const RSJarray& def) { // returns copy -- f
 // Elementary types
 
 // String
-template <>
+template <> inline 
 std::string  RSJresource::as<std::string> (const std::string& def) {
     if (!exists()) return (def);
     
@@ -723,21 +728,21 @@ std::string  RSJresource::as<std::string> (const std::string& def) {
 }
 
 // integer
-template <>
+template <> inline 
 int  RSJresource::as<int> (const int& def) {
     if (!exists()) return (def);
     return (atoi (strip_outer_quotes(data).c_str() ) );
 }
 
 // double
-template <>
+template <> inline 
 double  RSJresource::as<double> (const double& def) {
     if (!exists()) return (def);
     return (atof (strip_outer_quotes(data).c_str() ) );
 }
 
 // bool
-template <>
+template <> inline 
 bool  RSJresource::as<bool> (const bool& def) {
     if (!exists()) return (def);
     std::string cleanData = strip_outer_quotes (data);

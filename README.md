@@ -13,21 +13,14 @@ RSJp-cpp (a Ridiculously Simple JSON Parser for C++) is a template-based C++ par
 
 RSJp-cpp is a template-based JSON parser for C++ that is contained in a single header file.
 *   RSJp-cpp uses STL and does not depend on any external library.
-*   RSJp-cpp is template-based and there is nothing to build/install. The entire library is 
-    contained in a single header file (`RSJparser.tcc`) that you simply include in your code.
-    However, you can optionally copy the header to system folder by executing `sudo make install`.
-*   RSJp-cpp implements a relaxed parser that works with standard JSON syntax while
-    allowing some relaxation (e.g., omitting quotes around object key names).
+*   RSJp-cpp is template-based and there is nothing to build/install. The entire library is contained in a single header file (`RSJparser.tcc`) that you simply include in your code. However, you can optionally copy the header to system folder by executing `sudo make install`.
+*   RSJp-cpp implements a relaxed parser that works with standard JSON syntax while allowing some relaxation (e.g., omitting quotes around object key names).
 *   It is possible to extend the parsers to non-fundamental or user-defined types.
 *   Efficiency considerations:
-    - Parses parts of the JSON text at an on-demand basis.
+    - Parses parts of the JSON text at an on-demand basis as queries are made (i.e., does not require the entire JSON file to be parse for accessing only a part of it).
     - Internally stores parsed data for quick future reference.
-*   Security warning: RSJp-cpp skips most syntax and sanity checks on the JSON text itself. If the JSON
-    text has invalid JSON syntax, most of the time RSJp-cpp will still parse it without complaining, 
-    although its behavior may be unexpected / undefined. So, if the JSON text is a potential source of
-    infiltration (e.g., user input in a web-based application), RSJp-cpp should not be used.
-    Future version of RSJp-cpp will have added security features that can be optionally turned on for
-    performing syntax checks on the JSON text.
+    - Current version of RSJp-cpp is however not very efficient at parsing an entire large JSON file in one go. In future a `fast_parse` method will be developed for such parsing tasks.
+*   Security warning: RSJp-cpp skips most syntax and sanity checks on the JSON text itself. If the JSON text has invalid JSON syntax, most of the time RSJp-cpp will still parse it without complaining, although its behavior may be unexpected / undefined. So, if the JSON text is a potential source of infiltration (e.g., user input in a web-based application), RSJp-cpp should not be used. Future version of RSJp-cpp will have added security features that can be optionally turned on for performing syntax checks on the JSON text.
 
 
 ### Use:
@@ -63,8 +56,7 @@ The structured data is then accessed using the following members:
 ```
 
 ### User-defined Types:
-It is possible to extend the parsers to non-fundamental or user-defined types by
-specializing the template member function 'as' in your own code:
+It is possible to extend the parsers to non-fundamental or user-defined types by specializing the template member function 'as' in your own code:
 ```C++
     template<>
     user_defined_type  RSJresource::as<user_defined_type> (const user_defined_type& def)
