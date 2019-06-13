@@ -56,7 +56,7 @@ int main(int argc, char *argv[])
         std::cout << "The JSON string is " << my_json_string.length() << " bytes long." << std::endl;
         std::cout << "Test parse: The root contains " << json_file_resource.size() << " elements." << std::endl;
         if (PRINT_PARSED)
-            std::cout << json_file_resource.print() << std::endl;
+            std::cout << json_file_resource.as_str() << std::endl;
     }
     
     if (DO_BENCHMARK) {

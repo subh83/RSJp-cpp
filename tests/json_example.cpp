@@ -90,9 +90,9 @@ int main(int argc, char *argv[])
     dog_resource["coordinates"][2] = -4.7;
     dog_resource["weight"] = 11;
     std::cout << "Accessing non-existent 'age' of dog: " << dog_resource["age"].as<int>(-1) << std::endl;
-    std::cout << "\t printing the details about dog:\n" << my_resource["animals"][1].print() << std::endl;
+    std::cout << "\t printing the details about dog:\n" << my_resource["animals"][1].as_str() << std::endl;
     
     // ----
-    std::cout << "\nFinal complete resource printed:\n" << my_resource.print() << std::endl;
+    std::cout << "\nFinal complete resource printed:\n" << my_resource.as_str() << std::endl;
 }
 

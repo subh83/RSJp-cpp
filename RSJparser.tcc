@@ -281,7 +281,9 @@ public:
     bool exists (void) { return (_exists); }
     bool is_parsed (void) { return (parsed_data_p!=NULL); }
     RSJresourceType type (void);
-    std::string print (bool print_comments=false, bool update_data=true);
+    std::string as_str (bool print_comments=false, bool update_data=true);
+    void print (bool print_comments=false, bool update_data=true) 
+        { std::cout << as_str(print_comments,update_data) << std::endl; }
     
     // opertor[]
     RSJresource& operator[] (std::string key); // object
@@ -424,7 +426,7 @@ RSJresourceType RSJresource::type (void) {
     return (parsed_data_p->type);
 }
 
-std::string RSJresource::print (bool print_comments, bool update_data) {
+std::string RSJresource::as_str (bool print_comments, bool update_data) {
     if (exists()) {
         std::string ret;
         parse(); // parse if not parsed
@@ -433,7 +435,7 @@ std::string RSJresource::print (bool print_comments, bool update_data) {
         if (parsed_data_p->type==RSJ_OBJECT) {
             ret = "{\n";
             for (auto it=parsed_data_p->object.begin(); it!=parsed_data_p->object.end(); ++it) {
-                ret += RSJprinttab + "'" + it->first + "': " + insert_tab_after_newlines( it->second.print (print_comments, update_data) );
+                ret += RSJprinttab + "'" + it->first + "': " + insert_tab_after_newlines( it->second.as_str (print_comments, update_data) );
                 if (std::next(it) != parsed_data_p->object.end()) ret += ",";
                 if (print_comments)
                     ret += " // " + to_string(it->second.type());
@@ -444,7 +446,7 @@ std::string RSJresource::print (bool print_comments, bool update_data) {
         else if (parsed_data_p->type==RSJ_ARRAY) {
             ret = "[\n";
             for (auto it=parsed_data_p->array.begin(); it!=parsed_data_p->array.end(); ++it) {
-                ret += RSJprinttab + insert_tab_after_newlines( it->print (print_comments, update_data) );
+                ret += RSJprinttab + insert_tab_after_newlines( it->as_str (print_comments, update_data) );
                 if (std::next(it) != parsed_data_p->array.end()) ret += ",";
                 if (print_comments)
                     ret += " // " + to_string(it->type());

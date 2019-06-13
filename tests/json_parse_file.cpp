@@ -35,6 +35,6 @@ int main(int argc, char *argv[])
     std::ifstream my_fstream (argv[1]);
     RSJresource my_json (my_fstream);
     //std::cout << std::string ( (std::istreambuf_iterator<char>(my_fstream)), (std::istreambuf_iterator<char>()) ) << std::endl;
-    std::cout << my_json.print() << std::endl;
+    std::cout << my_json.as_str() << std::endl;
 }
 

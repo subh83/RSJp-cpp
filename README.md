@@ -106,7 +106,7 @@ Basic usage:
 ```C++
     my_resource["coordinates"][1] = -5; // change Y-coordinate
     my_resource["color"] = "black";
-    std::cout << "changed contents:\n" << my_resource.print() << std::endl;
+    std::cout << "changed contents:\n" << my_resource.as_str() << std::endl;
     /* Output:
         changed contents:
         {
