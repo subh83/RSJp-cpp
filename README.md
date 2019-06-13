@@ -75,11 +75,15 @@ The structured data is then accessed using the following members:
 ```
 
 ### User-defined Types:
-It is possible to extend the parsers to non-fundamental or user-defined types by specializing the template member function 'as' in your own code:
+It is possible to extend the parsers to non-fundamental or user-defined types by specializing the template member function `as()` in your own code:
 ```C++
     template<>
-    user_defined_type  RSJresource::as<user_defined_type> (const user_defined_type& def)
-    { /* ... */ }
+    user_t RSJresource::as<user_t> (const user_t& def) {
+        // return 'def' if empty
+        if (!exists()) return (def); // required
+        // convert member 'data' (of type std::string) into 'user_t' and return
+        return (user_t(data)); // example
+    }
 ```
 
 Basic usage:
