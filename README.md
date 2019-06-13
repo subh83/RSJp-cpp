@@ -47,7 +47,7 @@ The structured data is then accessed using the following members:
     int RSJresource::size (void);
     bool RSJresource::exists (void);
     RSJresourceType RSJresource::type (void);
-    std::string RSJresource::print (bool print_comments=false); // outputs as text. Note: 'print()' parses the entire JSON if it's not already parsed.
+    std::string RSJresource::as_str (bool print_comments=false); // outputs as text. Note: 'as_str()' parses the entire JSON if it's not already parsed.
     
     template <class dataType> 
         std::unordered_map<std::string,dataType> RSJresource::as_map (); // get copy of object as 'std::unordered_map<std::string,dataType>'
