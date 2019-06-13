@@ -156,13 +156,6 @@ Compile & run 'json_example.cpp':
     ./json_example
 ```
 
-Compile & run 'benchmark.cpp':
-```
-    cd tests
-    g++ -std=gnu++11 -I.. -Og -o benchmark benchmark.cpp
-    ./benchmark
-```
-
 Copy 'RSJparser.tcc' to system folder:
 ```
     sudo make install
