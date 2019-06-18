@@ -63,19 +63,21 @@ std::string to_string (RSJresourceType rt) {
     }
 }
 
+enum StrTrimDir { STRTRIM_L=1, STRTRIM_R=2, STRTRIM_LR=3 };
+
 inline 
-std::string strtrim (std::string str, std::string chars=" \t\n\r", int max_count=-1, std::string opts="lr") {
+std::string strtrim (std::string str, std::string chars=" \t\n\r", int max_count=-1, StrTrimDir dirs=STRTRIM_LR) {
     if (str.empty()) return(str);
     if (max_count<0) max_count = str.length();
     
-    if (opts.find('l')!=std::string::npos) { // left trim
+    if (dirs & STRTRIM_L) { // left trim
         int p;
         for (p=0; p<max_count; ++p)
             if (chars.find(str[p])==std::string::npos) break;
         str.erase (0, p);
     }
     
-    if (opts.find('r')!=std::string::npos) { // right trim
+    if (dirs & STRTRIM_R) { // right trim
         int q, strlenm1=str.length()-1;
         for (q=0; q<max_count; ++q)
             if (chars.find(str[strlenm1-q])==std::string::npos) break;
@@ -324,7 +326,7 @@ public:
         
         if (typ==RSJ_OBJECT || typ==RSJ_UNKNOWN) {
             // parse as object:
-            content = strtrim (strtrim (content, "{", 1, "l" ), "}", 1, "r" );
+            content = strtrim (strtrim (content, "{", 1, STRTRIM_L ), "}", 1, STRTRIM_R );
             if (content.length() != data.length()) { // a valid object
                 std::vector<std::string> nvPairs = split_RSJ_array (content);
                 for (int a=0; a<nvPairs.size(); ++a) {
@@ -343,7 +345,7 @@ public:
         
         if (typ==RSJ_ARRAY || typ==RSJ_UNKNOWN) {
             // parse as array
-            content = strtrim (strtrim (content, "[", 1, "l" ), "]", 1, "r" );
+            content = strtrim (strtrim (content, "[", 1, STRTRIM_L ), "]", 1, STRTRIM_R );
             if (content.length() != data.length()) { // a valid array
                 std::vector<std::string> nvPairs = split_RSJ_array (content);
                 for (int a=0; a<nvPairs.size(); ++a) 
