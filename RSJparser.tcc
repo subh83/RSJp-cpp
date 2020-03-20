@@ -462,7 +462,25 @@ std::string RSJresource::as_str (bool print_comments, bool update_data, bool pre
             ret += "]";
         }
         else // RSJ_LEAF or RSJ_UNKNOWN
-             ret = strtrim (data);
+        {
+            if(parsed_data_p->type==JSON_LEAF) {
+                if (data[0] == '\'' && data[data.length() - 1] == '\'') {
+                    data = data.substr(1,data.length() -2);
+                    std::string tmp = "";
+                    for(size_t i = 0; i < data.size(); ++i) {
+                        if (data[i] == '"' && data[i-1] != '\\') {
+                            tmp += "\\";
+                        }
+                        if (data[i] == '\'' && data[i-1] == '\\') {
+                            tmp = tmp.substr(0, tmp.size()-1);
+                        }
+                        tmp += data[i];
+                    }
+                    data = "\""+tmp+"\"";
+                }
+            }
+            ret = strtrim (data);
+        }
         
         if (update_data) data = ret;
         return (ret);
