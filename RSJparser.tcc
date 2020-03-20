@@ -400,18 +400,18 @@ public:
 
 // ------------------------------------------------------------
 // RSJresource member functions
-
+inline 
 RSJresource::~RSJresource (){
     if (parsed_data_p) delete parsed_data_p;
 }
-
+inline 
 RSJresource::RSJresource (const RSJresource& r) {
     data=r.data;
     _exists = r._exists;
     if(r.parsed_data_p) parsed_data_p = new RSJparsedData(*(r.parsed_data_p));
     else parsed_data_p = NULL;
 }
-
+inline 
 RSJresource& RSJresource::operator= (const RSJresource& r) {
     data=r.data;
     _exists = r._exists;
@@ -419,18 +419,18 @@ RSJresource& RSJresource::operator= (const RSJresource& r) {
     else parsed_data_p = NULL;
     return *this;
 }
-
+inline 
 int RSJresource::size (void) {
     parse();
     return (parsed_data_p->size());
 }
-
+inline 
 RSJresourceType RSJresource::type (void) {
     if (!exists()) return (RSJ_UNINITIATED);
     parse(); // parse if not parsed
     return (parsed_data_p->type);
 }
-
+inline 
 std::string RSJresource::as_str (bool print_comments, bool update_data, bool pretty) {
     if (exists()) {
         std::string ret;
@@ -472,13 +472,13 @@ std::string RSJresource::as_str (bool print_comments, bool update_data, bool pre
 }
 
 // Parsers
-
+inline 
 RSJresourceType RSJresource::parse (bool force) {
     if (!parsed_data_p)  parsed_data_p = new RSJparsedData;
     if (parsed_data_p->type==RSJ_UNKNOWN || force)  parsed_data_p->parse (data, RSJ_UNKNOWN);
     return (parsed_data_p->type);
 }
-
+inline 
 void RSJresource::parse_full (bool force, int max_depth, int* parse_count_for_verbose_p) { // recursive parsing (slow)
     if (max_depth==0) return;
     if (!parsed_data_p)  parsed_data_p = new RSJparsedData;
@@ -507,7 +507,7 @@ int seek_next (std::string* str_p, int start_pos, char character) {
     return -1;
 }
 
-
+inline 
 void RSJresource::fast_parse (std::string* str_p, bool copy_string, int max_depth, size_t* parse_start_str_pos) {
     // TODO: UNDER CONSTRUCTION...
     
@@ -638,24 +638,24 @@ void RSJresource::fast_parse (std::string* str_p, bool copy_string, int max_dept
 // ============================================================
 
 // ------------------------------------------------------------
-
+inline 
 RSJobject& RSJresource::as_object (bool force) {
     if (!parsed_data_p)  parsed_data_p = new RSJparsedData;
     if (parsed_data_p->type==RSJ_UNKNOWN || force)  parsed_data_p->parse (data, RSJ_OBJECT);
     return (parsed_data_p->object);
 }
-
+inline 
 RSJresource& RSJresource::operator[] (std::string key) { // returns reference
     return ( (as_object())[key] ); // will return empty resource (with _exists==false) if 
                                             // either this resource does not exist, is not an object, or the key does not exist
 }
-
+inline 
 RSJarray& RSJresource::as_array (bool force) {
     if (!parsed_data_p)  parsed_data_p = new RSJparsedData;
     if (parsed_data_p->type==RSJ_UNKNOWN || force)  parsed_data_p->parse (data, RSJ_ARRAY);
     return (parsed_data_p->array);
 }
-
+inline 
 RSJresource& RSJresource::operator[] (size_t indx) { // returns reference
     as_array();
     if (indx >= parsed_data_p->array.size())
@@ -667,7 +667,7 @@ RSJresource& RSJresource::operator[] (size_t indx) { // returns reference
 // ------------------------------------------------------------
 // special 'as':
 
-template <class dataType, class vectorType>
+template <class dataType, class vectorType> inline 
 vectorType RSJresource::as_vector (const vectorType& def) { // returns copy -- for being consistent with other 'as' specializations
     if (!exists()) return (def);
     vectorType ret;
@@ -677,7 +677,7 @@ vectorType RSJresource::as_vector (const vectorType& def) { // returns copy -- f
     return (ret);
 }
 
-template <class dataType, class mapType>
+template <class dataType, class mapType> inline 
 mapType RSJresource::as_map (const mapType& def) { // returns copy -- for being consistent with other 'as' specializations
     if (!exists()) return (def);
     mapType ret;
