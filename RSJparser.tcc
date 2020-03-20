@@ -205,7 +205,8 @@ std::vector<std::string> split_RSJ_array (const std::string& str) { // TODO: Mak
 }
 
 inline 
-std::string insert_tab_after_newlines (std::string str) {
+std::string insert_tab_after_newlines (std::string str, bool pretty = true) {
+    if (pretty == false) return (str);
     for (size_t a=0; a<str.length(); ++a)
         if (str[a]=='\n') {
             str.insert (a+1, RSJprinttab);
@@ -285,9 +286,9 @@ public:
     bool is_parsed (void) { return (parsed_data_p!=NULL); }
     RSJresourceType type (void);
     // emitter
-    std::string as_str (bool print_comments=false, bool update_data=true);
-    void print (bool print_comments=false, bool update_data=true) 
-        { std::cout << as_str(print_comments,update_data) << std::endl; }
+    std::string as_str (bool print_comments=false, bool update_data=true, bool pretty=false);
+    void print (bool print_comments=false, bool update_data=true, bool pretty=false) 
+        { std::cout << as_str(print_comments,update_data,pretty) << std::endl; }
     
     // opertor[]
     RSJresource& operator[] (std::string key); // object
@@ -430,31 +431,33 @@ RSJresourceType RSJresource::type (void) {
     return (parsed_data_p->type);
 }
 
-std::string RSJresource::as_str (bool print_comments, bool update_data) {
+std::string RSJresource::as_str (bool print_comments, bool update_data, bool pretty) {
     if (exists()) {
         std::string ret;
         parse(); // parse if not parsed
         parsed_data_p->cleanup();
         
         if (parsed_data_p->type==RSJ_OBJECT) {
-            ret = "{\n";
+            ret = pretty ? "{\n" : "{";
             for (auto it=parsed_data_p->object.begin(); it!=parsed_data_p->object.end(); ++it) {
-                ret += RSJprinttab + "'" + it->first + "': " + insert_tab_after_newlines( it->second.as_str (print_comments, update_data) );
+                ret += RSJprinttab + "\"" + it->first + "\":" + insert_tab_after_newlines( it->second.as_str (print_comments, update_data, pretty), pretty );
                 if (std::next(it) != parsed_data_p->object.end()) ret += ",";
-                if (print_comments)
+                if (print_comments && pretty == false)
                     ret += " // " + to_string(it->second.type());
-                ret += "\n";
+                if (pretty)
+                    ret += "\n";
             }
             ret += "}";
         }
         else if (parsed_data_p->type==RSJ_ARRAY) {
-            ret = "[\n";
+            ret = pretty ? "[\n" : "[";
             for (auto it=parsed_data_p->array.begin(); it!=parsed_data_p->array.end(); ++it) {
-                ret += RSJprinttab + insert_tab_after_newlines( it->as_str (print_comments, update_data) );
+                ret += RSJprinttab + insert_tab_after_newlines( it->as_str (print_comments, update_data, pretty), pretty );
                 if (std::next(it) != parsed_data_p->array.end()) ret += ",";
-                if (print_comments)
+                if (print_comments && pretty == false)
                     ret += " // " + to_string(it->type());
-                ret += "\n";
+                if (pretty)
+                    ret += "\n";
             }
             ret += "]";
         }
