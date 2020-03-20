@@ -440,7 +440,7 @@ std::string RSJresource::as_str (bool print_comments, bool update_data, bool pre
         if (parsed_data_p->type==RSJ_OBJECT) {
             ret = pretty ? "{\n" : "{";
             for (auto it=parsed_data_p->object.begin(); it!=parsed_data_p->object.end(); ++it) {
-                ret += RSJprinttab + "\"" + it->first + "\":" + insert_tab_after_newlines( it->second.as_str (print_comments, update_data, pretty), pretty );
+                ret += (pretty ? RSJprinttab : "") + "\"" + it->first + "\":" + insert_tab_after_newlines( it->second.as_str (print_comments, update_data, pretty), pretty );
                 if (std::next(it) != parsed_data_p->object.end()) ret += ",";
                 if (print_comments && pretty == false)
                     ret += " // " + to_string(it->second.type());
@@ -452,7 +452,7 @@ std::string RSJresource::as_str (bool print_comments, bool update_data, bool pre
         else if (parsed_data_p->type==RSJ_ARRAY) {
             ret = pretty ? "[\n" : "[";
             for (auto it=parsed_data_p->array.begin(); it!=parsed_data_p->array.end(); ++it) {
-                ret += RSJprinttab + insert_tab_after_newlines( it->as_str (print_comments, update_data, pretty), pretty );
+                ret += (pretty ? RSJprinttab : "") + insert_tab_after_newlines( it->as_str (print_comments, update_data, pretty), pretty );
                 if (std::next(it) != parsed_data_p->array.end()) ret += ",";
                 if (print_comments && pretty == false)
                     ret += " // " + to_string(it->type());
