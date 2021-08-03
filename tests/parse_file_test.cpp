@@ -30,10 +30,11 @@
 // RSJP header:
 #include "RSJparser.tcc"
 
+RSJresource read_file (std::string fname);
+
 int main(int argc, char *argv[])
 {
-    std::ifstream my_fstream (argv[1]);
-    RSJresource my_json (my_fstream);
+    RSJresource my_json = read_file (argv[1]);
     //std::cout << std::string ( (std::istreambuf_iterator<char>(my_fstream)), (std::istreambuf_iterator<char>()) ) << std::endl;
     std::cout << my_json.as_str() << std::endl;
 }

@@ -74,14 +74,14 @@ std::string strtrim (std::string str, std::string chars=" \t\n\r", int max_count
         int p;
         for (p=0; p<max_count; ++p)
             if (chars.find(str[p])==std::string::npos) break;
-        str.erase (0, p);
+        str.erase (0, p); // const_str::l_erase(p)
     }
     
     if (dirs & STRTRIM_R) { // right trim
         int q, strlenm1=str.length()-1;
         for (q=0; q<max_count; ++q)
             if (chars.find(str[strlenm1-q])==std::string::npos) break;
-        str.erase (str.length()-q, q);
+        str.erase (str.length()-q, q); // const_str::r_erase(q)
     }
     
     return (str);
@@ -92,7 +92,7 @@ std::string strip_outer_quotes (std::string str, char* qq=NULL) {
     str = strtrim (str);
     
     std::string ret = strtrim (str, "\"");
-    if (ret==str) {
+    if (ret.length()==str.length()) {
         ret = strtrim (str, "'");
         if (qq && ret!=str) *qq = '\'';
     }
@@ -320,7 +320,7 @@ public:
     RSJresourceType type;
     RSJparsedData() : type(RSJ_UNKNOWN) {}
     
-    // parser
+    // parser (single-level)
     void parse (const std::string& data, RSJresourceType typ = RSJ_UNKNOWN) {
         std::string content = strtrim(data);
         
@@ -399,10 +399,12 @@ public:
 // ------------------------------------------------------------
 // RSJresource member functions
 
+inline 
 RSJresource::~RSJresource (){
     if (parsed_data_p) delete parsed_data_p;
 }
 
+inline 
 RSJresource::RSJresource (const RSJresource& r) {
     data=r.data;
     _exists = r._exists;
@@ -410,6 +412,7 @@ RSJresource::RSJresource (const RSJresource& r) {
     else parsed_data_p = NULL;
 }
 
+inline 
 RSJresource& RSJresource::operator= (const RSJresource& r) {
     data=r.data;
     _exists = r._exists;
@@ -418,17 +421,20 @@ RSJresource& RSJresource::operator= (const RSJresource& r) {
     return *this;
 }
 
+inline 
 int RSJresource::size (void) {
-    parse();
+    parse(); // parse if not parsed
     return (parsed_data_p->size());
 }
 
+inline 
 RSJresourceType RSJresource::type (void) {
     if (!exists()) return (RSJ_UNINITIATED);
     parse(); // parse if not parsed
     return (parsed_data_p->type);
 }
 
+inline 
 std::string RSJresource::as_str (bool print_comments, bool update_data) {
     if (exists()) {
         std::string ret;
@@ -469,12 +475,14 @@ std::string RSJresource::as_str (bool print_comments, bool update_data) {
 
 // Parsers
 
+inline 
 RSJresourceType RSJresource::parse (bool force) {
     if (!parsed_data_p)  parsed_data_p = new RSJparsedData;
     if (parsed_data_p->type==RSJ_UNKNOWN || force)  parsed_data_p->parse (data, RSJ_UNKNOWN);
     return (parsed_data_p->type);
 }
 
+inline 
 void RSJresource::parse_full (bool force, int max_depth, int* parse_count_for_verbose_p) { // recursive parsing (slow)
     if (max_depth==0) return;
     if (!parsed_data_p)  parsed_data_p = new RSJparsedData;
@@ -503,7 +511,7 @@ int seek_next (std::string* str_p, int start_pos, char character) {
     
 }
 
-
+inline 
 void RSJresource::fast_parse (std::string* str_p, bool copy_string, int max_depth, int* parse_start_str_pos) {
     // TODO: UNDER CONSTRUCTION...
     
@@ -635,23 +643,27 @@ void RSJresource::fast_parse (std::string* str_p, bool copy_string, int max_dept
 
 // ------------------------------------------------------------
 
+inline 
 RSJobject& RSJresource::as_object (bool force) {
     if (!parsed_data_p)  parsed_data_p = new RSJparsedData;
     if (parsed_data_p->type==RSJ_UNKNOWN || force)  parsed_data_p->parse (data, RSJ_OBJECT);
     return (parsed_data_p->object);
 }
 
+inline 
 RSJresource& RSJresource::operator[] (std::string key) { // returns reference
     return ( (as_object())[key] ); // will return empty resource (with _exists==false) if 
                                             // either this resource does not exist, is not an object, or the key does not exist
 }
 
+inline 
 RSJarray& RSJresource::as_array (bool force) {
     if (!parsed_data_p)  parsed_data_p = new RSJparsedData;
     if (parsed_data_p->type==RSJ_UNKNOWN || force)  parsed_data_p->parse (data, RSJ_ARRAY);
     return (parsed_data_p->array);
 }
 
+inline 
 RSJresource& RSJresource::operator[] (int indx) { // returns reference
     as_array();
     if (indx >= parsed_data_p->array.size())
@@ -663,7 +675,7 @@ RSJresource& RSJresource::operator[] (int indx) { // returns reference
 // ------------------------------------------------------------
 // special 'as':
 
-template <class dataType, class vectorType>
+template <class dataType, class vectorType> inline 
 vectorType RSJresource::as_vector (const vectorType& def) { // returns copy -- for being consistent with other 'as' specializations
     if (!exists()) return (def);
     vectorType ret;
@@ -673,7 +685,7 @@ vectorType RSJresource::as_vector (const vectorType& def) { // returns copy -- f
     return (ret);
 }
 
-template <class dataType, class mapType>
+template <class dataType, class mapType> inline 
 mapType RSJresource::as_map (const mapType& def) { // returns copy -- for being consistent with other 'as' specializations
     if (!exists()) return (def);
     mapType ret;
@@ -758,6 +770,15 @@ bool  RSJresource::as<bool> (const bool& def) {
 // ------------------------------------
 // Other types
 
+/*template <> template <dataType> inline 
+bool  RSJresource::as< std::vector<dataType> > (const std::vector<dataType>& def) {
+    return as_vector<dataType> (def);
+}
 
+template <> template <dataType> inline 
+std::unordered_map<std::string,dataType>  RSJresource::as< std::unordered_map<std::string,dataType> > 
+                                                    (const std::unordered_map<std::string,dataType>& def) {
+    return as_map<dataType> (def);
+}*/
 
 #endif
