@@ -33,6 +33,7 @@
 #include <utility>
 #include <iostream>
 #include <climits>
+#include <fstream>
 
 
 static char const* RSJobjectbrackets = "{}";
@@ -423,6 +424,7 @@ RSJresource& RSJresource::operator= (const RSJresource& r) {
 
 inline 
 int RSJresource::size (void) {
+    if (!exists()) return (0);
     parse(); // parse if not parsed
     return (parsed_data_p->size());
 }
