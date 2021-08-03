@@ -17,6 +17,7 @@
 
 !tests/
 !tests/*.cpp
+!tests/*.hpp
 !tests/json_files/
 !tests/json_files/*.json
 
